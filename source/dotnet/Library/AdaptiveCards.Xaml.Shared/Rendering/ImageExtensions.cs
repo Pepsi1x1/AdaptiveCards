@@ -82,6 +82,23 @@ namespace AdaptiveCards.Rendering.Wpf
             };
 
             image.SetBinding(Image.StretchProperty, binding);
+#else
+            image.Source = new UriImageSource()
+            {
+                Uri = url,
+                CachingEnabled = false
+            };
+
+            //var parameters = new AdaptiveConverterParameters(image, adaptiveImage, context);
+            //var binding = new Binding
+            //{
+            //    Source = RelativeBindingSource.Self,
+            //    Path = "Parent.WidthRequest",
+            //    Mode = BindingMode.OneWay,
+            //    Converter = new StretchConverter(),
+            //    ConverterParameter = parameters
+            //};
+
 #endif
         }
 
