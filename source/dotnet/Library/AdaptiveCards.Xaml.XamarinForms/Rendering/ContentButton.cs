@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 
 namespace AdaptiveCards.Rendering
@@ -8,9 +8,6 @@ namespace AdaptiveCards.Rendering
         public ContentButton()
         {
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => Click?.Invoke(this, EventArgs.Empty)) } );
-
-            this.CornerRadius = 9;
-
 
             base.HasShadow = false;
         }

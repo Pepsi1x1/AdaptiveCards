@@ -39,7 +39,7 @@ namespace AdaptiveCards.XamarinForms.BotClient
         {
             "cortana-beta-dark.json", "cortana-beta-light.json", "cortana-skills.json", "microsoft-teams-dark.json", "microsoft-teams-light.json",
             "outlook-desktop.json", "render-to-image.json", "sample.json", "skype.json", "testVariantHostConfig.json",
-            "webchat.json", "windows-notification.json", "windows-timeline.json"
+            "webchat.json", "windows-notification.json", "windows-timeline.json", "hostconfig.json"
         };
 
         public MainPage()
@@ -155,7 +155,7 @@ namespace AdaptiveCards.XamarinForms.BotClient
 
         private void ReadHostConfig()
         {
-            CardsReader.ReadHostConfig(configFileNames[7]);
+            CardsReader.ReadHostConfig(configFileNames[this.configFileNames.Length - 1]);
         }
     }
 }

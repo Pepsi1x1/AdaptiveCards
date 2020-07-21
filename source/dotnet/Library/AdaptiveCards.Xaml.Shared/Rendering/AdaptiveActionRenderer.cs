@@ -36,7 +36,9 @@ namespace AdaptiveCards.Rendering.Wpf
         {
             var uiButton = new Button();
 
-            uiButton.BackgroundColor = context.GetColor("0080FF");
+            uiButton.BackgroundColor = Color.Transparent;
+            uiButton.CornerRadius = 0;
+            uiButton.BorderColor = context.GetColor(context.Config.ContainerStyles.Default.ForegroundColors.Dark.Default);
 
             uiButton.Style = context.GetStyle($"Adaptive.{action.Type}");
 
@@ -64,6 +66,7 @@ namespace AdaptiveCards.Rendering.Wpf
             var contentStackPanel = new StackPanel();
 #elif XAMARIN
             var contentStackPanel = new StackLayout();
+            contentStackPanel.HorizontalOptions = LayoutOptions.FillAndExpand;
 #endif
 
             if (!context.IsRenderingSelectAction)
@@ -88,9 +91,13 @@ namespace AdaptiveCards.Rendering.Wpf
 
             var uiTitle = new TextBlock();
             uiTitle.Text = action.Title;
-            uiTitle.TextColor = Color.White;
+            uiTitle.TextColor = uiButton.BorderColor = context.GetColor(context.Config.ContainerStyles.Default.ForegroundColors.Dark.Default); ;
             uiTitle.FontSize = context.Config.GetFontSize(AdaptiveFontType.Default, AdaptiveTextSize.Default);
+            uiTitle.VerticalTextAlignment = TextAlignment.Center;
+            uiTitle.HorizontalTextAlignment = TextAlignment.Center;
+            uiTitle.Padding = 10;
             uiTitle.Style = context.GetStyle($"Adaptive.Action.Title");
+            uiTitle.HorizontalOptions = LayoutOptions.FillAndExpand;
 
             if (action.IconUrl != null)
             {
@@ -152,6 +159,8 @@ namespace AdaptiveCards.Rendering.Wpf
                     contentStackPanel.Children.Add(uiSep);
                 }
             }
+
+            uiButton.HorizontalOptions = LayoutOptions.FillAndExpand;
 
             contentStackPanel.Children.Add(uiTitle);
 

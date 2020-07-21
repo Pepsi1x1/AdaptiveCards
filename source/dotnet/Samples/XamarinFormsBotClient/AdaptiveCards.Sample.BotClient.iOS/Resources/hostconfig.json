@@ -1,0 +1,14 @@
+﻿{
+  "actions": {
+    "maxActions": 10,
+    "spacing": "default",
+    "buttonSpacing": 10,
+    "showCard": {
+      "actionMode": "inline",
+      "inlineTopMargin": 10
+    },
+    "actionsOrientation": "vertical",
+    "actionAlignment": "stretch",
+    "iconSize": 50
+  }
+}
