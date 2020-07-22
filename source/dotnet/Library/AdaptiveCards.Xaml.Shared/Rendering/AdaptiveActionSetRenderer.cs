@@ -174,7 +174,11 @@ namespace AdaptiveCards.Rendering.Wpf
 #if XAMARIN
                     if (actionsConfig.ActionAlignment == AdaptiveHorizontalAlignment.Center)
                     {
-                        uiAction.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                        uiActionBar.HorizontalOptions = LayoutOptions.Center;
+                    }
+                    else if(actionsConfig.ActionAlignment == AdaptiveHorizontalAlignment.Stretch)
+                    {
+                        uiActionBar.HorizontalOptions = LayoutOptions.FillAndExpand;
                     }
 #endif
 

@@ -1,7 +1,9 @@
+using System;
+using System.Diagnostics;
 using AdaptiveCards.Rendering.Wpf;
 using Microsoft.MarkedNet;
 using Xamarin.Forms;
-
+using Xamarin.Forms.Xaml;
 using FrameworkElement = Xamarin.Forms.View;
 
 namespace AdaptiveCards.Rendering
@@ -13,23 +15,50 @@ namespace AdaptiveCards.Rendering
         {
             var uiTextBlock = new Xamarin.Forms.TextBlock();
             var text = RendererUtilities.ApplyTextFunctions(textBlock.Text, "en");
-            uiTextBlock.TextType = TextType.Html;
 
-            try
-            {
-                Marked marked = new Marked();
-
-                marked.Options.Mangle = false;
-
-                marked.Options.Sanitize = true;
-
-                string parsed = marked.Parse(text);
-
-                uiTextBlock.Text = parsed;
-            }
-            catch
+            if (string.IsNullOrWhiteSpace(text))
             {
                 uiTextBlock.Text = text;
+            }
+            else
+            {
+                try
+                {
+                    Marked marked = new Marked();
+
+                    marked.Options.Renderer = new AdaptiveXamarinDialectXamlMarkdownRenderer();
+
+                    marked.Options.Mangle = false;
+
+                    marked.Options.Sanitize = true;
+
+                    string parsed = marked.Parse(text);
+
+                    const string xamlDec = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><{0} xmlns=\"http://xamarin.com/schemas/2014/forms\" xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\">";
+
+                    var formattedString = new FormattedString();
+
+                    var formattedDec = string.Format(xamlDec, "FormattedString");
+
+                    formattedString = formattedString.LoadFromXaml(parsed);
+
+                    Debug.WriteLine(formattedString.Spans.Count + " Spans");
+
+                    
+                    var labelDec = string.Format(xamlDec, "TextBlock");
+
+                    string labelXaml = $"{labelDec}<TextBlock.FormattedText>{parsed}</TextBlock.FormattedText></TextBlock>";
+
+                    var label = new TextBlock().LoadFromXaml(labelXaml);
+
+                    uiTextBlock = label;
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.StackTrace);
+                    uiTextBlock.Text = text;
+                }
             }
 
             uiTextBlock.Style = context.GetStyle("Adaptive.TextBlock");
