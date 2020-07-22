@@ -36,15 +36,6 @@ namespace AdaptiveCards.Rendering
 
                     const string xamlDec = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><{0} xmlns=\"http://xamarin.com/schemas/2014/forms\" xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\">";
 
-                    var formattedString = new FormattedString();
-
-                    var formattedDec = string.Format(xamlDec, "FormattedString");
-
-                    formattedString = formattedString.LoadFromXaml(parsed);
-
-                    Debug.WriteLine(formattedString.Spans.Count + " Spans");
-
-                    
                     var labelDec = string.Format(xamlDec, "TextBlock");
 
                     string labelXaml = $"{labelDec}<TextBlock.FormattedText>{parsed}</TextBlock.FormattedText></TextBlock>";
