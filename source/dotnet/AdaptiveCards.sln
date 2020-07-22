@@ -47,6 +47,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdaptiveCards.Sample.BotCli
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Library\AdaptiveCards.Xaml.Shared\AdaptiveCards.Xaml.Shared.projitems*{85f2748a-f10c-4ee3-b05f-6bd9ca1c7bb7}*SharedItemsImports = 5
 		Library\AdaptiveCards.Xaml.Shared\AdaptiveCards.Xaml.Shared.projitems*{d4e691c8-f685-4e48-83d8-a063868e5e51}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -923,8 +924,6 @@ Global
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|iPhone.Deploy.0 = Debug|Any CPU
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|x64.Build.0 = Debug|Any CPU
 		{17B8EF80-B2D0-4B0D-B73E-BC462492333E}.Debug|x64.Deploy.0 = Debug|Any CPU

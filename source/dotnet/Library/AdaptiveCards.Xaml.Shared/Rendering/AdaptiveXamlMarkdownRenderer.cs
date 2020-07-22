@@ -24,6 +24,11 @@ namespace AdaptiveCards.Rendering.Wpf
             return String.Empty;
         }
 
+        public override string Text(string text)
+        {
+            return base.Text(text);
+        }
+
         public override string Br()
         {
             return "<LineBreak/>\n";

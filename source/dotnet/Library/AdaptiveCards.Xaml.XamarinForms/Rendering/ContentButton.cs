@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 
 namespace AdaptiveCards.Rendering
 {
-    public class ContentButton : ContentView
+    public class ContentButton : Frame
     {
         public ContentButton()
         {
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => Click?.Invoke(this, EventArgs.Empty)) } );
+
+            base.HasShadow = false;
         }
         public event EventHandler Click;
 

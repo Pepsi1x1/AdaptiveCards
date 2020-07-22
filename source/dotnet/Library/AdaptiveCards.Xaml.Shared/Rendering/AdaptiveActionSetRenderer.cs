@@ -84,6 +84,23 @@ namespace AdaptiveCards.Rendering.Wpf
 #if WPF
                 uiActionBar.HorizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), actionsConfig.ActionAlignment.ToString());
                 uiActionBar.VerticalAlignment = VerticalAlignment.Bottom;
+#elif XAMARIN
+                switch (actionsConfig.ActionAlignment)
+                {
+                    case AdaptiveHorizontalAlignment.Left:
+                        uiActionBar.HorizontalOptions = LayoutOptions.StartAndExpand;
+                        break;
+                    case AdaptiveHorizontalAlignment.Center:
+                        uiActionBar.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                        break;
+                    case AdaptiveHorizontalAlignment.Right:
+                        uiActionBar.HorizontalOptions = LayoutOptions.EndAndExpand;
+                        break;
+                    case AdaptiveHorizontalAlignment.Stretch:
+                        uiActionBar.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                        break;
+                }
+                uiActionBar.VerticalOptions = LayoutOptions.EndAndExpand;
 #endif
                 uiActionBar.Style = context.GetStyle("Adaptive.Actions");
 
@@ -157,7 +174,11 @@ namespace AdaptiveCards.Rendering.Wpf
 #if XAMARIN
                     if (actionsConfig.ActionAlignment == AdaptiveHorizontalAlignment.Center)
                     {
-                        uiAction.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                        uiActionBar.HorizontalOptions = LayoutOptions.Center;
+                    }
+                    else if(actionsConfig.ActionAlignment == AdaptiveHorizontalAlignment.Stretch)
+                    {
+                        uiActionBar.HorizontalOptions = LayoutOptions.FillAndExpand;
                     }
 #endif
 
@@ -186,6 +207,7 @@ namespace AdaptiveCards.Rendering.Wpf
                             uiShowCardContainer.DataContext = showCardAction;
                             uiShowCardContainer.Visibility = Visibility.Collapsed;
 #elif XAMARIN
+                            uiShowCardContainer.BindingContext = showCardAction;
                             uiShowCardContainer.IsVisible = false;
 #endif
 
@@ -195,6 +217,8 @@ namespace AdaptiveCards.Rendering.Wpf
                             var showCardStyleConfig = context.Config.ContainerStyles.GetContainerStyleConfig(actionsConfig.ShowCard.Style);
 #if WPF
                             uiShowCardContainer.Background = context.GetColorBrush(showCardStyleConfig.BackgroundColor);
+#elif XAMARIN
+                            uiShowCardContainer.BackgroundColor = context.GetColor(showCardStyleConfig.BackgroundColor);
 #endif
 
                             // render the card
@@ -202,6 +226,9 @@ namespace AdaptiveCards.Rendering.Wpf
 #if WPF
                             uiShowCardWrapper.Background = context.GetColorBrush("Transparent");
                             uiShowCardWrapper.DataContext = showCardAction;
+#elif XAMARIN
+                            uiShowCardWrapper.BackgroundColor = Color.Transparent;
+                            uiShowCardWrapper.BindingContext = showCardAction;
 #endif
 
                             uiShowCardContainer.Children.Add(uiShowCardWrapper);

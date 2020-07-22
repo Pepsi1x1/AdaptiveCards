@@ -34,10 +34,13 @@ namespace AdaptiveCards.Rendering.Wpf
 
         public static Button CreateActionButton(AdaptiveAction action, AdaptiveRenderContext context)
         {
-            var uiButton = new Button
-            {
-                Style = context.GetStyle($"Adaptive.{action.Type}"),
-            };
+            var uiButton = new Button();
+
+            uiButton.BackgroundColor = Color.Transparent;
+            uiButton.CornerRadius = 0;
+            uiButton.BorderColor = context.GetColor(context.Config.ContainerStyles.Default.ForegroundColors.Dark.Default);
+
+            uiButton.Style = context.GetStyle($"Adaptive.{action.Type}");
 
             if (!String.IsNullOrWhiteSpace(action.Style))
             {
@@ -51,6 +54,10 @@ namespace AdaptiveCards.Rendering.Wpf
                 {
                     style = context.GetStyle("DestructiveActionDefaultStyle");
                 }
+                else if(style == null && String.Equals(action.Style, "default", StringComparison.OrdinalIgnoreCase))
+                {
+                    style = context.GetStyle("ActionDefaultStyle");
+                }
 
                 uiButton.Style = style;
             }
@@ -59,6 +66,7 @@ namespace AdaptiveCards.Rendering.Wpf
             var contentStackPanel = new StackPanel();
 #elif XAMARIN
             var contentStackPanel = new StackLayout();
+            contentStackPanel.HorizontalOptions = LayoutOptions.FillAndExpand;
 #endif
 
             if (!context.IsRenderingSelectAction)
@@ -78,19 +86,18 @@ namespace AdaptiveCards.Rendering.Wpf
             //uiButton.Style = context.GetStyle($"Adaptive.Action.Title");
 
             uiButton.Content = contentStackPanel;
-#if WPF
-            //uiButton.Content = contentStackPanel;
-#else
-            //return uiButton;
-#endif
+
             FrameworkElement uiIcon = null;
 
-            var uiTitle = new TextBlock
-            {
-                Text = action.Title,
-                FontSize = context.Config.GetFontSize(AdaptiveFontType.Default, AdaptiveTextSize.Default),
-                Style = context.GetStyle($"Adaptive.Action.Title")
-            };
+            var uiTitle = new TextBlock();
+            uiTitle.Text = action.Title;
+            uiTitle.TextColor = uiButton.BorderColor = context.GetColor(context.Config.ContainerStyles.Default.ForegroundColors.Dark.Default); ;
+            uiTitle.FontSize = context.Config.GetFontSize(AdaptiveFontType.Default, AdaptiveTextSize.Default);
+            uiTitle.VerticalTextAlignment = TextAlignment.Center;
+            uiTitle.HorizontalTextAlignment = TextAlignment.Center;
+            uiTitle.Padding = 10;
+            uiTitle.Style = context.GetStyle($"Adaptive.Action.Title");
+            uiTitle.HorizontalOptions = LayoutOptions.FillAndExpand;
 
             if (action.IconUrl != null)
             {
@@ -145,13 +152,15 @@ namespace AdaptiveCards.Rendering.Wpf
                         VerticalAlignment = VerticalAlignment.Stretch,
                         Width = spacing,
 #else
-                        VerticalOptions = LayoutOptions.FillAndExpand,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
                         WidthRequest = spacing
 #endif
                     };
                     contentStackPanel.Children.Add(uiSep);
                 }
             }
+
+            uiButton.HorizontalOptions = LayoutOptions.FillAndExpand;
 
             contentStackPanel.Children.Add(uiTitle);
 
